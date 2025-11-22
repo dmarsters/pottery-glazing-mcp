@@ -15,6 +15,14 @@ processor = GlazeChemistryProcessor()
 # Initialize MCP server
 mcp = Server("pottery-glazing-chemistry")
 
+async def run_async():
+    """Run the server asynchronously."""
+    async with mcp:
+        await mcp.wait_for_shutdown()
+
+# Attach the run_async method to the mcp instance
+mcp.run_async = run_async
+
 
 @mcp.call_tool()
 async def call_tool(name: str, arguments: dict) -> str:
