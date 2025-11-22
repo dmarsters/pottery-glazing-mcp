@@ -233,6 +233,3 @@ def compare_glaze_formulations(glaze1_description: str, glaze2_description: str)
         "note": "Use analyze_glaze_formulation() for precise parameters"
     })
 
-
-if __name__ == "__main__":
-    mcp.run()
