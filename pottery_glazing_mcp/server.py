@@ -5,7 +5,7 @@ Exposes glaze chemistry analysis and image prompt enhancement as MCP tools.
 """
 
 import json
-from mcp import Server
+from mcp.server import Server
 from pottery_glazing_mcp.glaze_processor import GlazeChemistryProcessor
 
 # Initialize processor
