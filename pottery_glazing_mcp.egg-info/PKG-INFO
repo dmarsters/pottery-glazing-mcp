@@ -4,7 +4,7 @@ Version: 0.1.0
 Summary: MCP server for pottery glazing chemistry visual parameter encoding
 Author-email: Dal <dal@example.com>
 Requires-Python: >=3.9
-Requires-Dist: mcp>=0.1.0
+Requires-Dist: mcp>=1.21.0
 Requires-Dist: pyyaml>=6.0
 Provides-Extra: dev
 Requires-Dist: pytest>=7.0; extra == "dev"

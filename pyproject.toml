@@ -9,7 +9,7 @@ description = "MCP server for pottery glazing chemistry visual parameter encodin
 authors = [{name = "Dal", email = "dal@example.com"}]
 requires-python = ">=3.9"
 dependencies = [
-    "mcp>=0.1.0",
+    "mcp>=1.21.0",
     "pyyaml>=6.0",
 ]
 
