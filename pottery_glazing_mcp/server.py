@@ -17,7 +17,7 @@ mcp = Server("pottery-glazing-chemistry")
 
 async def run_async(transport=None, host=None, port=None, **kwargs):
     """Run the server asynchronously."""
-    await mcp.wait_for_shutdown()
+    pass
 
 # Attach the run_async method to the mcp instance
 mcp.run_async = run_async
