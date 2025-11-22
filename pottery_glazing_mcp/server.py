@@ -13,10 +13,10 @@ from pottery_glazing_mcp.glaze_processor import GlazeChemistryProcessor
 processor = GlazeChemistryProcessor()
 
 # Initialize MCP server
-server = Server("pottery-glazing-chemistry")
+mcp = Server("pottery-glazing-chemistry")
 
 
-@server.call_tool()
+@mcp.call_tool()
 async def call_tool(name: str, arguments: dict) -> str:
     """Handle tool calls."""
     
@@ -34,7 +34,7 @@ async def call_tool(name: str, arguments: dict) -> str:
         return json.dumps({"error": f"Unknown tool: {name}"})
 
 
-@server.list_tools()
+@mcp.list_tools()
 async def list_tools() -> list[Tool]:
     """List available tools."""
     return [
@@ -235,4 +235,4 @@ def compare_glaze_formulations(glaze1_description: str, glaze2_description: str)
 
 
 if __name__ == "__main__":
-    server.run()
+    mcp.run()
