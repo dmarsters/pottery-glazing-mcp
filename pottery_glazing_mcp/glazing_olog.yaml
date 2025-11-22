@@ -1,0 +1,135 @@
+## Pottery Glazing Chemistry - Categorical Structure Olog
+## Organizing principle: Signature visual effects that emerge from glaze chemistry
+## Domain: What potters recognize, name, and deliberately create
+
+types:
+  GlazeEffect:
+    description: "Recognizable visual outcome from glaze chemistry interactions"
+    subtypes:
+      - MatteOpaque
+      - GlossyClear
+      - SemiMatte
+      - Crystalline
+      - UnderglazeMat
+      - RunningGlaze
+    visual_signature: "distinctive appearance that potters use to identify success"
+
+  ColorDevelopment:
+    description: "How oxide chemistry produces visible hue in fired glaze"
+    subtypes:
+      - IronReds
+      - CobaltBlues
+      - CopperGreens
+      - ChromeGreen
+      - ManganeseViolet
+      - VanadiumYellow
+      - UnderglazeMats
+    mechanism: "oxidation state + flux interaction → hue"
+
+  SurfaceTexture:
+    description: "Physical surface characteristics from melt behavior"
+    subtypes:
+      - ShinyGloss
+      - SilkMatte
+      - VelvetyMatte
+      - CrystallineSparkle
+      - Satin
+      - Dry
+    mechanism: "viscosity + surface tension + cooling behavior"
+
+  FiringAtmosphere:
+    description: "How kiln environment affects color development"
+    subtypes:
+      - Oxidation
+      - Reduction
+      - Neutral
+    oxidation_effect: "favors iron yellows/browns, copper blues, chrome greens"
+    reduction_effect: "favors copper reds, iron blacks, cobalt purples, smoking/darkening"
+
+  FluxBehavior:
+    description: "How alkaline compounds enable melting and viscosity control"
+    subtypes:
+      - AlkalineFlux
+      - AlkalineEarthFlux
+      - BoronFlux
+      - PlumbFlux
+    viscosity_role: "controls flow, matte vs gloss, surface smoothness"
+    interaction_role: "flux + oxide interactions determine final color"
+
+  TemperatureRange:
+    description: "Cone temperatures where glaze develops optimal character"
+    subtypes:
+      - LowFire
+      - MidFire
+      - HighFire
+    effect_on_color: "higher temps intensify some colors, mute others, affect saturation"
+    effect_on_texture: "higher temps increase gloss, alter crystalline structure"
+
+# MORPHISMS: How types relate and transform
+morphisms:
+  Colorant_to_VisualEffect:
+    domain: ColorDevelopment
+    codomain: GlazeEffect
+    mechanism: "oxide chemistry + firing atmosphere → hue + saturation + value"
+    example: "IronReds (morphism via reduction atmosphere) → ShinyGloss with deep color saturation"
+
+  FluxBehavior_to_SurfaceTexture:
+    domain: FluxBehavior
+    codomain: SurfaceTexture
+    mechanism: "flux viscosity + melt rate → surface matte/gloss spectrum"
+    example: "BoronFlux (high fluidity) → GlossyClear; AlkalineFlux (moderate) → SilkMatte"
+
+  Atmosphere_to_ColorModulation:
+    domain: FiringAtmosphere
+    codomain: ColorDevelopment
+    mechanism: "oxygen availability → oxidation states of colorants"
+    example: "Reduction (morphism) takes CopperGreens toward CopperReds with darkening"
+
+  Temperature_to_GlazeMaturation:
+    domain: TemperatureRange
+    codomain: GlazeEffect
+    mechanism: "heat energy → flux activity + crystalline structure formation"
+    example: "HighFire (morphism) intensifies gloss, develops crystalline structure"
+
+  CompositeEffect:
+    domain: "ColorDevelopment × FluxBehavior × FiringAtmosphere × TemperatureRange"
+    codomain: GlazeEffect
+    mechanism: "synergistic interaction of all chemistry dimensions"
+    constraint: "not all combinations produce visually distinctive effects—only certain morphism paths create signature looks"
+
+# COMMUTATIVE DIAGRAMS: Verification paths for consistent transformations
+commutative_diagrams:
+  Reduction_Copper_Red:
+    description: "Copper oxide under reduction produces characteristic deep red"
+    path_1: "CopperGreens → (Reduction) → DeepRed → (SilkMatte) → ReducedCopperRed"
+    path_2: "Reduction → (OxidationStateShift) → DeepRed; SilkMatteFlux → (Interaction) → ReducedCopperRed"
+    commutativity: "Both paths yield same visual: deep red, matte, possibly runny"
+
+  Boron_Gloss_Development:
+    description: "Boron flux creates characteristic glossy surface"
+    path_1: "BoronFlux → (HighFluidityMorphism) → GlossyClear → (ColorantInteraction) → ColoredGloss"
+    path_2: "Colorant → (BoronFluxInteraction) → EnhancedHue; HighFluidityMorphism → (GlossDevelopment) → ColoredGloss"
+    commutativity: "Boron first or colorant first produces same gloss + hue outcome"
+
+# SENSORY INTENTION PRINCIPLES (Category Theory grounding)
+# Why these morphisms work for image generation
+sensory_intention:
+  depth_of_color:
+    principle: "Saturation inversely correlates with gloss in reduction; oxidation → lighter, more saturated hues"
+    visual_implication: "reduction glazes feel heavy/dark; oxidation glazes feel bright/clear"
+    image_param: "color saturation, value darkness"
+
+  surface_polish:
+    principle: "Flux viscosity determines whether glaze surface becomes mirror-smooth (boron) or matte (alkaline earth)"
+    visual_implication: "boron glazes = reflective, luminous; alkaline earth = absorptive, grounded"
+    image_param: "specular highlights, diffuse reflection, perceived texture"
+
+  edge_behavior:
+    principle: "Running glazes (high fluidity) pool at rims and drip at edges; matte glazes stay put"
+    visual_implication: "glossy + running = dynamic, fluid feeling; matte + static = stable, earthy"
+    image_param: "gradient direction, edge definition, sense of flow"
+
+  interaction_intensity:
+    principle: "Colorant saturation increases under reduction; decreases under oxidation"
+    visual_implication: "reduction = intense, deep, mysterious; oxidation = clear, bright, direct"
+    image_param: "color intensity, contrast ratio, perceived depth"
