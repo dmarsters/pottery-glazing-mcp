@@ -1,124 +1,17 @@
-"""
-Pottery Glazing Chemistry MCP Server
-
-Exposes glaze chemistry analysis and image prompt enhancement as MCP tools.
-"""
+"""FastMCP server for pottery glazing chemistry - Flat structure for cloud compatibility."""
 
 import json
-from mcp.server import Server
-from mcp.types import Tool, TextContent
+from fastmcp import FastMCP
 from pottery_glazing_mcp.glaze_processor import GlazeChemistryProcessor
 
 # Initialize processor
 processor = GlazeChemistryProcessor()
 
-# Initialize MCP server
-mcp = Server("pottery-glazing-chemistry")
-
-async def run_async(transport=None, host=None, port=None, **kwargs):
-    """Run the server asynchronously."""
-    pass
-
-# Attach the run_async method to the mcp instance
-mcp.run_async = run_async
+# Initialize FastMCP server
+server = FastMCP("pottery-glazing-chemistry")
 
 
-@mcp.call_tool()
-async def call_tool(name: str, arguments: dict) -> str:
-    """Handle tool calls."""
-    
-    if name == "analyze_glaze_formulation":
-        return analyze_glaze_formulation(**arguments)
-    elif name == "enhance_image_prompt_from_glaze":
-        return enhance_image_prompt_from_glaze(**arguments)
-    elif name == "list_available_colorants":
-        return list_available_colorants()
-    elif name == "list_available_fluxes":
-        return list_available_fluxes()
-    elif name == "compare_glaze_formulations":
-        return compare_glaze_formulations(**arguments)
-    else:
-        return json.dumps({"error": f"Unknown tool: {name}"})
-
-
-@mcp.list_tools()
-async def list_tools() -> list[Tool]:
-    """List available tools."""
-    return [
-        Tool(
-            name="analyze_glaze_formulation",
-            description="Analyze a pottery glaze formulation and extract visual parameters for image generation",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "colorant": {
-                        "type": "string",
-                        "description": "Metal oxide colorant (iron, cobalt, copper, chrome, manganese, vanadium)"
-                    },
-                    "colorant_percentage": {
-                        "type": "number",
-                        "description": "Percentage of colorant in formulation"
-                    },
-                    "flux_type": {
-                        "type": "string",
-                        "description": "Flux system (boron, alkaline, alkaline_earth, lead)"
-                    },
-                    "atmosphere": {
-                        "type": "string",
-                        "description": "Firing atmosphere (oxidation, reduction, neutral)"
-                    },
-                    "cone": {
-                        "type": "integer",
-                        "description": "Firing cone number"
-                    },
-                    "runs": {
-                        "type": "boolean",
-                        "description": "Whether glaze runs"
-                    }
-                },
-                "required": ["colorant", "colorant_percentage", "flux_type", "atmosphere", "cone"]
-            }
-        ),
-        Tool(
-            name="enhance_image_prompt_from_glaze",
-            description="Enhance an image prompt with glaze visual characteristics",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "base_prompt": {"type": "string", "description": "Original image prompt"},
-                    "colorant": {"type": "string", "description": "Metal oxide colorant"},
-                    "flux_type": {"type": "string", "description": "Flux system"},
-                    "atmosphere": {"type": "string", "description": "Firing atmosphere"},
-                    "cone": {"type": "integer", "description": "Firing cone"}
-                },
-                "required": ["base_prompt", "colorant", "flux_type", "atmosphere", "cone"]
-            }
-        ),
-        Tool(
-            name="list_available_colorants",
-            description="List all available pottery glaze colorants",
-            inputSchema={"type": "object", "properties": {}}
-        ),
-        Tool(
-            name="list_available_fluxes",
-            description="List all available flux systems",
-            inputSchema={"type": "object", "properties": {}}
-        ),
-        Tool(
-            name="compare_glaze_formulations",
-            description="Compare two glaze formulations",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "glaze1_description": {"type": "string"},
-                    "glaze2_description": {"type": "string"}
-                },
-                "required": ["glaze1_description", "glaze2_description"]
-            }
-        )
-    ]
-
-
+@server.tool()
 def analyze_glaze_formulation(
     colorant: str,
     colorant_percentage: float,
@@ -127,6 +20,7 @@ def analyze_glaze_formulation(
     cone: int,
     runs: bool = False,
 ) -> str:
+    """Analyze a pottery glaze formulation and extract visual parameters for image generation."""
     try:
         result = processor.analyze_glaze_formulation(
             colorant=colorant,
@@ -141,6 +35,7 @@ def analyze_glaze_formulation(
         return json.dumps({"error": str(e)})
 
 
+@server.tool()
 def enhance_image_prompt_from_glaze(
     base_prompt: str,
     colorant: str,
@@ -148,6 +43,7 @@ def enhance_image_prompt_from_glaze(
     atmosphere: str,
     cone: int,
 ) -> str:
+    """Enhance an image generation prompt with pottery glaze visual characteristics."""
     try:
         glaze_analysis = processor.analyze_glaze_formulation(
             colorant=colorant,
@@ -211,7 +107,9 @@ def enhance_image_prompt_from_glaze(
         return json.dumps({"error": str(e)})
 
 
+@server.tool()
 def list_available_colorants() -> str:
+    """List all available pottery glaze colorants."""
     colorants = {
         "iron": {"description": "Iron oxide", "warmth": 8.0, "character": "earthy"},
         "cobalt": {"description": "Cobalt oxide", "warmth": 1.5, "character": "pure blue"},
@@ -223,7 +121,9 @@ def list_available_colorants() -> str:
     return json.dumps(colorants, indent=2)
 
 
+@server.tool()
 def list_available_fluxes() -> str:
+    """List all available flux systems."""
     fluxes = {
         "boron": {"reflectivity": 9.5, "effect": "glossy, luminous"},
         "alkaline": {"reflectivity": 6.0, "effect": "fluid, dynamic"},
@@ -233,10 +133,15 @@ def list_available_fluxes() -> str:
     return json.dumps(fluxes, indent=2)
 
 
+@server.tool()
 def compare_glaze_formulations(glaze1_description: str, glaze2_description: str) -> str:
+    """Compare two glaze formulations."""
     return json.dumps({
         "glaze1": glaze1_description,
         "glaze2": glaze2_description,
         "note": "Use analyze_glaze_formulation() for precise parameters"
     })
 
+
+if __name__ == "__main__":
+    server.run()

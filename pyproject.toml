@@ -1,22 +1,21 @@
 [build-system]
-requires = ["setuptools>=45", "wheel"]
+requires = ["setuptools>=65.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "pottery-glazing-mcp"
 version = "0.1.0"
 description = "MCP server for pottery glazing chemistry visual parameter encoding"
-authors = [{name = "Dal", email = "dal@example.com"}]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
-    "mcp>=1.21.0",
+    "fastmcp>=0.1.0",
     "pyyaml>=6.0",
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest>=7.0",
-    "pytest-cov>=4.0",
+    "pytest-asyncio>=0.21.0",
 ]
 
 [tool.setuptools.packages]
